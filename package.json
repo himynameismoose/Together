@@ -58,5 +58,8 @@
   "workspaces": [
     "client",
     "server"
-  ]
+  ],
+  "dependencies": {
+    "ics": "^3.8.1"
+  }
 }

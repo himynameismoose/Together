@@ -8,7 +8,8 @@ const dateNow = Temporal.Now.plainDateISO();
 const dateYesterday = dateNow.subtract({ days: 1 });
 const dateTomorrow = dateNow.add({ days: 1 });
 const dateIn5Days = dateNow.add({ days: 5 });
-const dateAfterMaxPeriod = dateNow.add({ days: MAX_RECURRENCE_PERIOD + 1 });
+const dateIn6Days = dateNow.add({ days: 6 }); // <-- Make sure this line is here
+// const dateAfterMaxPeriod = dateNow.add({ days: MAX_RECURRENCE_PERIOD + 1 });
 const dateBeforeMax = Temporal.PlainDate.from(EVENT_MAX_DATE).subtract({
   days: 2,
 });
@@ -31,9 +32,9 @@ const validFormDataNonRecurr = {
     rate: "noRecurr",
     days: [],
   },
-  initialDate: dateNow.toString(),
+  initialDate: dateTomorrow.toString(),
   startTime: timeNow.toString().slice(0, 5),
-  finalDate: dateNow.toString(),
+  finalDate: dateTomorrow.toString(),
   endTime: timeIn1hour.toString().slice(0, 5),
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 };
@@ -47,9 +48,9 @@ const validFormDataRecurr = {
     rate: "weekly",
     days: ["1", "2", "3", "4", "5", "6", "7"],
   },
-  initialDate: dateNow.toString(),
+  initialDate: dateTomorrow.toString(),
   startTime: timeNow.toString().slice(0, 5),
-  finalDate: dateIn5Days.toString(),
+  finalDate: dateIn6Days.toString(),
   endTime: timeIn1hour.toString().slice(0, 5),
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 };
@@ -84,12 +85,12 @@ const finalDateLessThanStartDateRecurr = {
 
 const finalDateGreaterThanStartDateNonrecurr = {
   ...validFormDataNonRecurr,
-  finalDate: dateTomorrow.toString(),
+  finalDate: dateTomorrow.add({ days: 1 }).toString(),
 };
 
 const exceedMaxPeriod = {
   ...validFormDataRecurr,
-  finalDate: dateAfterMaxPeriod.toString(),
+  finalDate: dateTomorrow.add({ days: MAX_RECURRENCE_PERIOD + 1 }).toString(),
 };
 
 const startBeforeEndAfterMAX = {

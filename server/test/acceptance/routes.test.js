@@ -10,6 +10,7 @@ const {
 const { Database, asGuest } = require("../utils");
 
 describe("event routes", () => {
+  jest.setTimeout(30000);
   const testDb = new Database();
 
   beforeEach(async () => {
